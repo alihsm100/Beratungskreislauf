@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Beratungskreislauf einrichten</title>
+  <script src="https://res.cdn.office.net/teams-js/2.19.0/js/MicrosoftTeams.min.js"></script>
+  <style>
+    body { font-family: -apple-system, "Segoe UI", sans-serif; padding: 24px; color: #242424; }
+  </style>
+</head>
+<body>
+  <h3>Beratungskreislauf</h3>
+  <p>Klicke unten auf <b>Speichern</b>, um den Tab hinzuzufügen.</p>
+  <script>
+    microsoftTeams.app.initialize().then(() => {
+      microsoftTeams.pages.config.registerOnSaveHandler((saveEvent) => {
+        microsoftTeams.pages.config.setConfig({
+          suggestedDisplayName: "Beratungskreislauf",
+          entityId: "beratungskreislauf",
+          contentUrl: "https://alihsm100.github.io/Beratungskreislauf/",
+          websiteUrl: "https://alihsm100.github.io/Beratungskreislauf/"
+        });
+        saveEvent.notifySuccess();
+      });
+      microsoftTeams.pages.config.setValidityState(true);
+    });
+  </script>
+</body>
+</html>
