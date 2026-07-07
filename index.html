@@ -57,6 +57,8 @@ svg text{font-family:'DM Sans',Arial,sans-serif;}
 .acc-inhalt ul{margin:8px 0 8px 18px;}
 .acc-inhalt li{margin-bottom:5px;}
 .acc-inhalt .verweis{color:var(--himmel); font-weight:700;}
+.video-wrap{position:relative; width:100%; aspect-ratio:16/9; margin:12px 0 4px; background:var(--blau);}
+.video-wrap iframe{position:absolute; inset:0; width:100%; height:100%; border:0;}
 .merk{background:var(--himmel15); border-left:4px solid var(--himmel); padding:10px 13px; margin:10px 0; font-size:13px;}
 .ecampus{display:inline-block; margin-top:8px; background:var(--limette); color:var(--blau); font-weight:700; font-size:12px; padding:6px 12px; text-decoration:none;}
 .ecampus:hover{background:#c2c700;}
@@ -113,6 +115,7 @@ svg text{font-family:'DM Sans',Arial,sans-serif;}
 <script>
 /* ===== Links: hier URLs eintragen, sobald vorhanden. Leer = Button unsichtbar. ===== */
 const LINKS = {};           /* eCampus-Links pro Unterpunkt, z.B. LINKS['te1']='https://...' */
+const VIDEOS = {};          /* Video-Embeds pro Unterpunkt (SharePoint/Stream-Embed-URL), z.B. VIDEOS['te1']='https://...sharepoint.com/.../embed.aspx?...' — Player erscheint nur, wo eine URL eingetragen ist. Braucht Internet + M365-Login. */
 const TOOL_PPTX_URL = '';   /* Download-Link Interaktives Terminierungstool (PowerPoint, z.B. SharePoint) */
 
 const STATIONEN = [
@@ -166,6 +169,26 @@ const STATIONEN = [
    {id:'te1', t:'Weg 1 — Der Pitch (7 Schritte)', x:`<ul><li>1. Einleitung</li><li>2. Gesprächsanlass</li><li>3. Akquisefrage</li><li>4. Merkmal</li><li>5. Vorteil</li><li>6. Nutzen</li><li>7. Terminfrage</li></ul>
      <div class="merk"><b>Akquiseformel: Standing × Vertrauen × Interesse × Strategie.</b> Multiplikativ — der schwächste Faktor begrenzt dein Ergebnis.</div>
      <p><b>MVN</b> — für jede Zielperson formulieren: <b>M</b>erkmal unserer Dienstleistung → <b>V</b>orteil daraus → konkreter <b>N</b>utzen für genau diesen Menschen (Berufskacheln helfen dabei).</p>`},
+   {id:'te5', t:'Einwandbehandlung — Vorwand vs. Einwand', x:`<p>Bevor du behandelst: <b>erst prüfen, was du vor dir hast.</b></p>
+     <ul>
+       <li><b>Vorwand</b> = eine vorgeschobene Wand. Nicht behandelbar — <b>aufdecken, was dahintersteht</b>, statt dagegen zu argumentieren.</li>
+       <li><b>Einwand</b> = eine echte, berechtigte Sorge — „die Kuh vom Eis holen".</li>
+     </ul>
+     <div class="merk">„Keine Zeit" kann beides sein — <b>derselbe Wortlaut, zwei verschiedene Dinge.</b> Entscheidend ist, was dahintersteckt: erst prüfen, dann behandeln.</div>
+     <p><b>Typische Einwände (bzw. Vorwände):</b></p>
+     <ul>
+       <li><b>Kein Vertrauen:</b> „Schneeballsystem" · „ihr wollt nur verkaufen" · „nur fürs Geld / Provision" · Vorbehalte gegenüber tecis</li>
+       <li><b>Persönliche Gründe:</b> Zeit · Geld · Interesse — dahinter steckt oft: Überforderung</li>
+     </ul>
+     <p><b>Optimale Einwandbehandlung — 4 Schritte:</b></p>
+     <ul>
+       <li>1. <b>Bestätigen</b></li>
+       <li>2. <b>Einwand aufnehmen</b></li>
+       <li>3. <b>Einwand abschwächen</b></li>
+       <li>4. <b>Lösung / Nutzen formulieren</b></li>
+     </ul>
+     <p>Prinzip dahinter: <b>Aikido</b> — annehmen, umlenken, auflösen. Nicht dagegenhalten.</p>
+     <p><b>Alternative Einwandbehandlung:</b> Fragen stellen · direkt auflösen.</p>`},
    {id:'te2', t:'Weg 2 — Events & Einladung', x:`<p>Terminierung über Veranstaltungen: du lädst Kontakte zu einem Event ein — das Event liefert den Anlass, der Nachfass macht den Termin.</p>`},
    {id:'te3', t:'Weg 3 — Empfehlungsgeber & FK-Terminierung', x:`<p>Du trittst als <b>Empfehlungsgeber</b> auf bzw. deine <b>Führungskraft terminiert für dich</b>: die FK ruft deine qualifizierten Kontakte an und legt den Termin — du steigst im Gespräch ein.</p>`},
   ]},
@@ -285,11 +308,12 @@ function oeffneModal(id){
   h+=`<p class="modal-desc">${aktiv.desc}</p>`;
   aktiv.punkte.forEach((p,idx)=>{
     const link = LINKS[p.id] ? `<a class="ecampus" href="${LINKS[p.id]}" target="_blank" rel="noopener">→ Im eCampus öffnen</a>` : '';
+    const video = VIDEOS[p.id] ? `<div class="video-wrap"><iframe src="${VIDEOS[p.id]}" allowfullscreen loading="lazy" allow="autoplay; encrypted-media"></iframe></div>` : '';
     h+=`<div class="acc ${idx===0?'offen':''}">
       <button class="acc-kopf" onclick="this.parentElement.classList.toggle('offen')">
         <h3>${p.t}${p.luecke?' <span class="luecke-tag" style="margin:0 0 0 6px; vertical-align:2px;">folgt</span>':''}</h3>
         <span class="pfeil">›</span></button>
-      <div class="acc-inhalt">${p.x}${link}</div></div>`;
+      <div class="acc-inhalt">${p.x}${video}${link}</div></div>`;
   });
   b.innerHTML=h;
   document.getElementById('overlay').classList.add('offen');
