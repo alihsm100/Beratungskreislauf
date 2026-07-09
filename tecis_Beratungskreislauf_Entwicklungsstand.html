@@ -222,13 +222,18 @@ const VIDEOS = {
    (z. B. Direktaufruf via SharePoint): Überblick-Version — so landet nie jemand
    ungewollt in der Berater-Version. Komfort-Routing, keine Zugriffskontrolle
    (echte Sperrung nur über SharePoint-Berechtigungen).
-   SharePoint-URLs eingetragen 09.07.2026: Ziel = die veröffentlichten
-   Embed-Seiten (.aspx) je Rollen-Site — kanonischer Einstieg, rendert das Tool
-   im Einbetten-Webpart. Leerer Eintrag ('') = Button unsichtbar. */
+   RÜCKLINK ENTFERNT (Ali, 09.07.2026 nach Klick-Test): Der Check öffnet in
+   einem neuen Tab — der ursprüngliche Teams-/Browser-Tab bleibt offen, ein
+   Link-Rücksprung in die Teams-App ist technisch nicht möglich und der Sprung
+   auf die .aspx-Seite verwirrte. Leerer Eintrag ('') = Button unsichtbar.
+   Reaktivierung: die drei .aspx-URLs wieder eintragen (live geprüft 09.07.2026):
+   ueberblick:  https://slde.sharepoint.com/teams/Team1844-VPinEinarbeitung/SitePages/Beratungskreislauf-%E2%80%93-%C3%9Cberblick.aspx
+   vertriebler: https://slde.sharepoint.com/teams/Team1844-VP-Vertriebler/SitePages/Beratungskreislauf-%E2%80%93-Vertriebler.aspx
+   berater:     https://slde.sharepoint.com/teams/Team1844-VP3-Berater/SitePages/Beratungskreislauf-%E2%80%93-Berater.aspx */
 const KREISLAUF_URLS = {
-  ueberblick:  'https://slde.sharepoint.com/teams/Team1844-VPinEinarbeitung/SitePages/Beratungskreislauf-%E2%80%93-%C3%9Cberblick.aspx',
-  vertriebler: 'https://slde.sharepoint.com/teams/Team1844-VP-Vertriebler/SitePages/Beratungskreislauf-%E2%80%93-Vertriebler.aspx',
-  berater:     'https://slde.sharepoint.com/teams/Team1844-VP3-Berater/SitePages/Beratungskreislauf-%E2%80%93-Berater.aspx'
+  ueberblick:  '',
+  vertriebler: '',
+  berater:     ''
 };
 const ROLLE = new URLSearchParams(location.search).get('rolle');
 const KREISLAUF_URL = Object.prototype.hasOwnProperty.call(KREISLAUF_URLS, ROLLE) ? KREISLAUF_URLS[ROLLE] : KREISLAUF_URLS.ueberblick;
