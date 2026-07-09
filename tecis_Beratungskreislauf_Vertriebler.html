@@ -159,9 +159,10 @@ const MODE = 'vertriebler';   /* FEST GESETZT — Export aus der Master-Datei. I
 const MODE_LABEL = {ueberblick:'Überblick', vertriebler:'Vertriebler', berater:'Berater'};
 
 /* Fähigkeiten-Check (FK Entwicklungscheck).
-   SharePoint-URL eingetragen 09.07.2026: Datei-Kopie auf der VP2-Site
-   (Vertriebler-Version verlinkt die Kopie der eigenen Rollen-Site). */
-const CHECK_URL = 'https://slde.sharepoint.com/teams/Team1844-VP-Vertriebler/Shared%20Documents/tecis_Beratungskreislauf_Entwicklungsstand.html';
+   ENTSCHIEDEN 09.07.2026 (nach Test): relativer Link. SharePoint-Datei-URLs
+   erzwingen Download statt Rendern; relativ löst im github.io-Hosting auf
+   denselben Ordner auf (Check liegt daneben) und funktioniert auch lokal. */
+const CHECK_URL = 'tecis_Beratungskreislauf_Entwicklungsstand.html';
 
 /* Rollen-Routing (ENTSCHIEDEN 09.07.2026, Spez A.4): ?rolle=<MODE> wird an den
    Check-Link angehängt — der Rücklink im Check liest den Parameter und führt in
