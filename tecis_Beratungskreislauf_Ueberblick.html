@@ -516,6 +516,81 @@ function initModus(){
 
 initModus();
 zeichneKreis();
+
+
+/* ---------- IFRAME-ZENTRIERUNG (11.08.2026) ----------
+   Problem: position:fixed bezieht sich auf das iframe-Fenster, nicht auf den
+   Bildschirm. Im SharePoint-Embed ist das iframe hoeher als der sichtbare
+   Bereich, das Popup landete deshalb in der Mitte des Kreises statt in der
+   Mitte des Bildschirms.
+   Loesung: Ein IntersectionObserver mit root:null misst auch im
+   Cross-Origin-iframe gegen das Fenster der obersten Seite und liefert den
+   gerade sichtbaren Streifen (in iframe-Koordinaten, also derselbe Bezug wie
+   position:fixed). Der Streifen wird dem Overlay als Innenabstand gegeben --
+   das vorhandene Flex-Layout zentriert das Popup dann darin, und
+   .modal{max-height:100%} begrenzt es automatisch auf den Streifen.
+   Ausserhalb eines iframes passiert nichts. */
+(function(){
+  if(window.self===window.top) return;              /* kein iframe: alles bleibt wie bisher */
+  if(!('IntersectionObserver' in window)) return;   /* alter Browser: normale Zentrierung */
+
+  var MIN_STREIFEN=220;   /* darunter lohnt das Umrechnen nicht -- normal zentrieren */
+  var LUFT=20;            /* Rand wie im bisherigen .overlay-padding */
+  var TAKT=120;           /* ms, nur waehrend ein Popup offen ist */
+
+  function start(){
+    var mess=document.createElement('div');
+    mess.setAttribute('aria-hidden','true');
+    mess.style.cssText='position:fixed; inset:0; pointer-events:none; opacity:0; z-index:-1;';
+    document.body.appendChild(mess);
+
+    var flaechen=[].slice.call(document.querySelectorAll('.overlay, .bk-voll'));
+    if(!flaechen.length) return;
+
+    var sicht=null, taktung=null;
+
+    function offen(){ return flaechen.some(function(f){ return f.classList.contains('offen'); }); }
+
+    function anpassen(){
+      var h=window.innerHeight;
+      var nutzbar = sicht && (sicht.bottom-sicht.top)>=MIN_STREIFEN;
+      flaechen.forEach(function(f){
+        if(!f.classList.contains('offen') || !nutzbar){
+          f.style.paddingTop=''; f.style.paddingBottom=''; return;
+        }
+        f.style.paddingTop    = (Math.max(0, Math.round(sicht.top))+LUFT)+'px';
+        f.style.paddingBottom = (Math.max(0, Math.round(h-sicht.bottom))+LUFT)+'px';
+      });
+    }
+
+    var stufen=[]; for(var i=0;i<=100;i++) stufen.push(i/100);
+    var beobachter=new IntersectionObserver(function(eintraege){
+      var r=eintraege[eintraege.length-1];
+      sicht = (r.isIntersecting && r.intersectionRect.height>0)
+        ? {top:r.intersectionRect.top, bottom:r.intersectionRect.bottom}
+        : null;
+      anpassen();
+    },{root:null, threshold:stufen});
+    beobachter.observe(mess);
+
+    /* Deckt das iframe das ganze Fenster, bleibt die Sichtbarkeitsquote beim
+       Scrollen konstant und der Observer feuert nicht -- obwohl sich der
+       sichtbare Streifen verschiebt. Neu-Beobachten erzwingt eine Messung. */
+    function messen(){ beobachter.unobserve(mess); beobachter.observe(mess); }
+    function takt(an){
+      if(an && !taktung){ taktung=setInterval(messen, TAKT); }
+      else if(!an && taktung){ clearInterval(taktung); taktung=null; }
+    }
+
+    var umschalter=new MutationObserver(function(){ anpassen(); takt(offen()); if(offen()) messen(); });
+    flaechen.forEach(function(f){ umschalter.observe(f,{attributes:true, attributeFilter:['class']}); });
+    window.addEventListener('resize', anpassen);
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
+/* ---------- Ende IFRAME-ZENTRIERUNG ---------- */
 </script>
 </body>
 </html>
