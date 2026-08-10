@@ -52,14 +52,15 @@ svg text{font-family:'DM Sans',Arial,sans-serif;}
 .k-label.zw{font-weight:500;}
 .k-score{font-weight:700; fill:#fff;}
 .k-sub{font-size:11px; fill:var(--himmel); font-weight:700;}
-.overlay{position:fixed; inset:0; background:rgba(0,50,91,.55); display:none; align-items:flex-start; justify-content:center; padding:40px 16px; z-index:50; overflow-y:auto;}
+.overlay{position:fixed; inset:0; background:rgba(0,50,91,.55); display:none; align-items:center; justify-content:center; padding:20px 14px; z-index:50; overflow:hidden; overscroll-behavior:contain;}
 .overlay.offen{display:flex;}
-.modal{background:#fff; max-width:720px; width:100%; box-shadow:0 10px 40px rgba(0,0,0,.3);}
-.modal-kopf{background:var(--blau); color:#fff; padding:20px 26px; display:flex; justify-content:space-between; align-items:flex-start; gap:16px;}
+body.modal-offen{overflow:hidden;}
+.modal{background:#fff; max-width:720px; width:100%; max-height:100%; display:flex; flex-direction:column; box-shadow:0 10px 40px rgba(0,0,0,.3);}
+.modal-kopf{background:var(--blau); color:#fff; padding:20px 26px; flex:0 0 auto; display:flex; justify-content:space-between; align-items:flex-start; gap:16px;}
 .modal-kopf h2{font-size:26px; font-weight:700;}
 .modal-kopf .m-kicker{font-size:10px; text-transform:uppercase; letter-spacing:.16em; color:var(--limette); font-weight:700; margin-bottom:5px;}
 .modal-kopf .schliessen{background:none; border:none; color:#fff; font-size:26px; line-height:1; cursor:pointer; padding:0 4px;}
-.modal-body{padding:22px 26px 26px;}
+.modal-body{padding:22px 26px 26px; flex:1 1 auto; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch;}
 .modal-desc{font-size:14px; line-height:1.55; margin-bottom:18px;}
 .luecke-tag{display:inline-block; background:var(--limette); color:var(--blau); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; padding:3px 8px; margin-bottom:12px;}
 .gc-band{background:var(--himmel); color:#fff; padding:12px 16px; margin-bottom:12px;}
@@ -255,11 +256,11 @@ const STATIONEN = [
    {id:'nw5', t:'Kontaktaufbau-Eskalation genutzt (inkl. Prep Call)', x:'Fünf Stufen: 1. Guter Kontaktgrund (Input zu seinem Fachthema einholen) · 2. Social Media (Reaktion/Interaktion, Medienwechsel, Humor) · 3. Prep Call (Anruf ohne Anlass — 1. Mal ungewohnt, 2. Mal erwartet, 3. Mal Freude) · 4. Persönliches Treffen · 5. Kleines „privates" Event (Pokerabend, Fußball).'}
   ]},
  {id:'pr', name:'PR-Story', typ:'zw',
-  desc:'Die persönliche Geschichte des VP — vor der Terminierung. Erst „Wer ist tecis?", dann der Zuversichtsberater-Nutzen, dann die eigene Story. Die PR-Story ist zugleich Reaktionstest im Networking.',
+  desc:'Die persönliche Geschichte des VP — vor der Terminierung. Der Aufbau hat zwei Schritte: erst „Wer ist tecis?", dann die eigene Story. Der Zuversichtsberater-Nutzen ist Hintergrundwissen, kein Schritt im Aufbau. Die PR-Story ist zugleich Reaktionstest im Networking.',
   punkte:[
-   {id:'pr3', t:'tecis-Fakten sicher', x:'35+ Jahre ganzheitliche Beratung, Kernkompetenz qualifizierte Investmentberatung · Spezialistenvertrieb PKV, bAV, Kapitalanlageimmobilien, Finanzierung · rund 4.000 lizenzierte Berater, knapp 10.000 Vertriebspartner/Handelsvertreter, über 400 Standorte.'},
-   {id:'pr2', t:'Zuversichtsberater-Nutzen abrufbar', x:'Prüft und optimiert · staatliche Zulagen + Steuervorteile · weniger Kosten, mehr Transparenz, bessere Ordnung, höhere Rendite bei gleicher Sicherheit · einige tausend Euro mehr im Portemonnaie.'},
-   {id:'pr1', t:'4 Fragen ausgearbeitet', x:'1. Was wollte ich eigentlich machen? (Plan/Werdegang) · 2. Warum bin ich zu tecis gewechselt? (Wendepunkt, ehrlich) · 3. Klarer Kundennutzen · 4. Ausstieg mit offener Frage.'},
+   {id:'pr3', t:'1 · tecis-Fakten sicher', x:'Seit 1986 — über 40 Jahre — ganzheitliche Beratung, Kernkompetenz qualifizierte Investmentberatung · sieben Spezialistenbereiche: Individuelle Arbeitskraftabsicherung, betriebliche Altersvorsorge, Investment, private Krankenversicherung, Immobilienfinanzierung, Kapitalanlageimmobilien, gewerbliche Versicherungen · knapp 10.000 Vertriebspartner, davon über 4.000 lizenzierte Berater, über 400 Standorte.'},
+   {id:'pr1', t:'2 · Deine Story — 4 Fragen ausgearbeitet', x:'1. Was wollte ich eigentlich machen? (Plan/Werdegang) · 2. Warum bin ich zu tecis gewechselt? (Wendepunkt, ehrlich) · 3. Klarer Kundennutzen · 4. Ausstieg mit offener Frage.'},
+   {id:'pr2', t:'Hintergrund: Zuversichtsberater-Nutzen abrufbar', x:'Kein Schritt im Aufbau, sondern Hintergrundwissen. Prüft und optimiert · staatliche Zulagen + Steuervorteile · weniger Kosten, mehr Transparenz, bessere Ordnung, höhere Rendite bei gleicher Sicherheit · einige tausend Euro mehr im Portemonnaie.'},
    {id:'pr4', t:'PR-Story als Reaktionstest im Einsatz', x:'Die PR-Story wird auf dem Networking-Weg kommuniziert und testet Reaktionen — weitergearbeitet wird nur mit positiven und neutralen Reaktionen.'}
   ]},
  {id:'term', name:'Terminierung', typ:'haupt',
@@ -392,7 +393,7 @@ function oeffneModal(id){
   document.getElementById('m-kicker').textContent = aktiv.typ==='haupt'?'Hauptstation':'Zwischenschritt';
   document.getElementById('m-titel').textContent = aktiv.name;
   renderModalBody();
-  document.getElementById('overlay').classList.add('offen');
+  document.getElementById('overlay').classList.add('offen'); document.body.classList.add('modal-offen'); {const _mb=document.getElementById('overlay').querySelector('.modal-body'); if(_mb)_mb.scrollTop=0;}
 }
 function renderModalBody(){
   const b=document.getElementById('m-body');
@@ -431,7 +432,7 @@ function setRating(pid,val){
   if(val==null) delete state.ratings[pid]; else state.ratings[pid]=val;
   save(); if(aktiv) renderModalBody(); zeichneKreis();
 }
-function schliesseModal(){document.getElementById('overlay').classList.remove('offen');}
+function schliesseModal(){document.getElementById('overlay').classList.remove('offen'); document.body.classList.remove('modal-offen');}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){schliesseModal(); schliesseCode();}});
 
 /* ===== Ergebniscode-Export (Dashboard-Spez, Entscheidungen 09.07.2026) =====
@@ -449,7 +450,7 @@ function ergebnisCode(){
 }
 function kopiereErgebnis(){
   document.getElementById('code-box').textContent=ergebnisCode();
-  document.getElementById('code-overlay').classList.add('offen');
+  document.getElementById('code-overlay').classList.add('offen'); document.body.classList.add('modal-offen'); {const _mb=document.getElementById('code-overlay').querySelector('.modal-body'); if(_mb)_mb.scrollTop=0;}
   kopiereCode();
 }
 function kopiereCode(){
@@ -461,7 +462,7 @@ function kopiereCode(){
     navigator.clipboard.writeText(code).then(ok,fehler);
   } else { fehler(); }
 }
-function schliesseCode(){document.getElementById('code-overlay').classList.remove('offen');}
+function schliesseCode(){document.getElementById('code-overlay').classList.remove('offen'); document.body.classList.remove('modal-offen');}
 
 ['vp','fk','datum'].forEach(k=>{
   const el=document.getElementById('f-'+k);

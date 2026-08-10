@@ -44,14 +44,15 @@ svg text{font-family:'DM Sans',Arial,sans-serif;}
 .k-label.zw{font-weight:500;}
 .k-sub{font-size:11px; fill:var(--himmel); font-weight:700;}
 
-.overlay{position:fixed; inset:0; background:rgba(0,50,91,.55); display:none; align-items:flex-start; justify-content:center; padding:40px 16px; z-index:50; overflow-y:auto;}
+.overlay{position:fixed; inset:0; background:rgba(0,50,91,.55); display:none; align-items:center; justify-content:center; padding:20px 14px; z-index:50; overflow:hidden; overscroll-behavior:contain;}
 .overlay.offen{display:flex;}
-.modal{background:#fff; max-width:760px; width:100%; box-shadow:0 10px 40px rgba(0,0,0,.3);}
-.modal-kopf{background:var(--blau); color:#fff; padding:20px 26px; display:flex; justify-content:space-between; align-items:flex-start; gap:16px;}
+body.modal-offen{overflow:hidden;}
+.modal{background:#fff; max-width:760px; width:100%; max-height:100%; display:flex; flex-direction:column; box-shadow:0 10px 40px rgba(0,0,0,.3);}
+.modal-kopf{background:var(--blau); color:#fff; padding:20px 26px; flex:0 0 auto; display:flex; justify-content:space-between; align-items:flex-start; gap:16px;}
 .modal-kopf h2{font-size:26px; font-weight:700;}
 .modal-kopf .m-kicker{font-size:10px; text-transform:uppercase; letter-spacing:.16em; color:var(--limette); font-weight:700; margin-bottom:5px;}
 .modal-kopf .schliessen{background:none; border:none; color:#fff; font-size:26px; line-height:1; cursor:pointer; padding:0 4px;}
-.modal-body{padding:22px 26px 26px;}
+.modal-body{padding:22px 26px 26px; flex:1 1 auto; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch;}
 .modal-desc{font-size:14.5px; line-height:1.6; margin-bottom:18px;}
 .luecke-tag{display:inline-block; background:var(--limette); color:var(--blau); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; padding:3px 8px; margin-bottom:12px;}
 
@@ -246,24 +247,25 @@ const STATIONEN = [
      <li>5. <b>Kleines „privates" Event</b> — mehrere Kontakte zusammenbringen (Pokerabend, Fußball).</li></ul>`}
   ]},
  {id:'pr', name:'PR-Story', typ:'zw',
-  desc:'Deine persönliche Geschichte: warum du das machst und was dein Gegenüber davon hat. Sie kommt vor der Terminierung — wer deine Story kennt, sagt leichter Ja zum Termin.',
+  desc:'Deine persönliche Geschichte: warum du das machst und was dein Gegenüber davon hat. Sie kommt vor der Terminierung — wer deine Story kennt, sagt leichter Ja zum Termin. Der Aufbau hat zwei Schritte: erst „Wer ist tecis?", dann deine persönliche Story.',
   punkte:[
-   {id:'pr3', t:'Wer ist tecis?', x:`<ul>
-     <li>berät seit mehr als 35 Jahren ganzheitlich — Kernkompetenz ist die qualifizierte Investmentberatung</li>
-     <li>Ausgabensenkung & Optimierung, Förderung und Zulagen</li>
-     <li>Spezialistenvertrieb für Private Krankenversicherung, betriebliche Altersvorsorge, Kapitalanlageimmobilien und Finanzierung</li>
-     <li>rund 4.000 lizenzierte Berater und knapp 10.000 Vertriebspartner/Handelsvertreter — an über 400 Standorten bundesweit, Tendenz wachsend</li></ul>`},
-   {id:'pr2', t:'Was macht der Zuversichtsberater?', x:`<ul>
+   {id:'pr3', t:'1 · Wer ist tecis?', x:`<ul>
+     <li>berät <b>seit 1986 — über 40 Jahre</b> — ganzheitlich; Kernkompetenz ist die qualifizierte Investmentberatung</li>
+     <li>Ausgabensenkung & Optimierung, Förderungen und Zulagen</li>
+     <li><b>sieben Spezialistenbereiche:</b> Individuelle Arbeitskraftabsicherung · Betriebliche Altersvorsorge · Investment · Private Krankenversicherung · Immobilienfinanzierung · Kapitalanlageimmobilien · Gewerbliche Versicherungen</li>
+     <li><b>knapp 10.000 Vertriebspartner</b>, davon <b>über 4.000 lizenzierte Berater</b>, an <b>über 400 Standorten</b> bundesweit — Tendenz wachsend</li></ul>`},
+   {id:'pr1', t:'2 · Deine persönliche Story — 4 Fragen', x:`<p>Formuliere deine Geschichte in eigenen Worten — kurz, ehrlich, mit klarem Nutzen für dein Gegenüber:</p>
+     <div class="fragekarte"><b>1. Was wollte ich eigentlich machen?</b><span>dein ursprünglicher Plan / Werdegang</span></div>
+     <div class="fragekarte"><b>2. Warum bin ich zu tecis gewechselt?</b><span>der Wendepunkt — ehrlich und persönlich</span></div>
+     <div class="fragekarte"><b>3. Klarer Kundennutzen</b><span>was der Kunde konkret davon hat</span></div>
+     <div class="fragekarte"><b>4. Ausstieg mit offener Frage</b><span>überleiten bzw. die Frage wegnehmen</span></div>`},
+   {id:'pr2', t:'Hintergrund für dich — Was macht der Zuversichtsberater?', x:`<div class="merk"><b>Das ist kein Schritt im Aufbau deiner Story</b>, sondern Wissen, das in deinem Kopf sitzen muss: Du musst jederzeit erklären können, was wir eigentlich tun.</div>
+     <ul>
      <li>prüft und optimiert</li>
      <li>nutzt alle staatlichen Zulagen und generiert Steuervorteile</li>
      <li>Vorteile für den Kunden: weniger Kosten, mehr Transparenz, bessere Ordnung, höhere Rendite bei gleicher Sicherheit</li>
      <li>dadurch einige tausend Euro mehr im Portemonnaie</li>
      <li>mehr Budget für Urlaub, private Anschaffungen, besseres Auto, früher in den Ruhestand, schneller in die eigenen vier Wände</li></ul>`},
-   {id:'pr1', t:'Deine persönliche PR-Story — 4 Fragen', x:`<p>Formuliere deine Geschichte in eigenen Worten — kurz, ehrlich, mit klarem Nutzen für dein Gegenüber:</p>
-     <div class="fragekarte"><b>1. Was wollte ich eigentlich machen?</b><span>dein ursprünglicher Plan / Werdegang</span></div>
-     <div class="fragekarte"><b>2. Warum bin ich zu tecis gewechselt?</b><span>der Wendepunkt — ehrlich und persönlich</span></div>
-     <div class="fragekarte"><b>3. Klarer Kundennutzen</b><span>was der Kunde konkret davon hat</span></div>
-     <div class="fragekarte"><b>4. Ausstieg mit offener Frage</b><span>überleiten bzw. die Frage wegnehmen</span></div>`},
    {id:'pr4', t:'PR-Story = Reaktionstest', x:`<p>Die PR-Story wird <b>auf dem Networking-Weg</b> kommuniziert — und testet Reaktionen: positiv, neutral oder negativ.</p>
      <div class="merk"><b>Weitergearbeitet wird nur mit positiven und neutralen Reaktionen.</b></div>`}
   ]},
@@ -482,7 +484,7 @@ function oeffneModal(id){
     }
   }
   b.innerHTML=h;
-  document.getElementById('overlay').classList.add('offen');
+  document.getElementById('overlay').classList.add('offen'); document.body.classList.add('modal-offen'); {const _mb=document.getElementById('overlay').querySelector('.modal-body'); if(_mb)_mb.scrollTop=0;}
   // Download-Button fürs Terminierungstool
   const slot=document.getElementById('dl-slot');
   if(slot){
@@ -491,7 +493,7 @@ function oeffneModal(id){
       : `<div class="dl-hinweis">Download-Link wird ergänzt — bis dahin findest du das Tool im Team-SharePoint.</div>`;
   }
 }
-function schliesseModal(){document.getElementById('overlay').classList.remove('offen');}
+function schliesseModal(){document.getElementById('overlay').classList.remove('offen'); document.body.classList.remove('modal-offen');}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')schliesseModal();});
 
 /* ===== Rollen-Modell: Titel, Header-Button, Legende ===== */
