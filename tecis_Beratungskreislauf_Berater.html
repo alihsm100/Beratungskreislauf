@@ -538,7 +538,7 @@ function oeffneModal(id){
             <span class="pfeil">›</span></button>
           <div class="acc-inhalt">${s.x}${videoHtml(s.id)}</div></div>`).join('');
       }
-      h+=`<div class="acc ${idx===0?'offen':''}">
+      h+=`<div class="acc">
         <button class="acc-kopf" onclick="this.parentElement.classList.toggle('offen')">
           <h3>${p.t}${p.luecke?' <span class="luecke-tag" style="margin:0 0 0 6px; vertical-align:2px;">folgt</span>':''}</h3>
           <span class="pfeil">›</span></button>
