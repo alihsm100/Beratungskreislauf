@@ -17,6 +17,11 @@ body{font-family:'DM Sans',Arial,sans-serif; color:var(--blau); background:#fff;
 h1,h2,h3{font-family:'Tinos',Times,serif;}
 header{padding:26px 34px 18px; display:flex; gap:26px; align-items:flex-start; flex-wrap:wrap; border-bottom:1px solid var(--sand);}
 header img{height:78px; width:auto;}
+body.eingebettet header > img,
+body.eingebettet header .kicker,
+body.eingebettet header h1,
+body.eingebettet header .intro{display:none;}
+body.eingebettet header.kopf-eng{padding:14px clamp(18px,3.4vw,34px);}
 .kopf-mitte{flex:1; min-width:280px;}
 .kicker{font-weight:700; text-transform:uppercase; letter-spacing:.16em; color:var(--himmel); font-size:11px; margin-bottom:8px;}
 .hl-box{display:inline; background:var(--himmel); color:#fff; font-family:'Tinos',Times,serif; font-weight:700; font-size:27px; line-height:1.55; padding:2px 10px; -webkit-box-decoration-break:clone; box-decoration-break:clone;}
@@ -583,6 +588,29 @@ if(KREISLAUF_URL){const kl=document.getElementById('btn-kreislauf'); kl.href=KRE
   else start();
 })();
 /* ---------- Ende IFRAME-ZENTRIERUNG ---------- */
+
+/* ---------- EMBED-KOPF (eingebaut 24.08.2026) ----------
+   Im iframe zeigt das Werkzeug keinen eigenen Kopf mehr — den Titelbereich
+   stellt die SharePoint-Seite in voller Breite. Direkt geoeffnet aendert
+   sich nichts. Bedienelemente (#check-slot, .kopf-felder, .kopf-rechts)
+   bleiben in jedem Fall sichtbar. */
+(function(){
+  // EMBED-KOPF
+  if(window.self === window.top) return;
+  function kopfWeg(){
+    document.body.classList.add('eingebettet');
+    var kopf = document.querySelector('header');
+    if(!kopf) return;
+    kopf.classList.add('kopf-eng');   /* schmaleres Padding, damit kein leerer Streifen bleibt */
+    var inhalt = Array.prototype.some.call(kopf.querySelectorAll('*'), function(el){
+      return el.offsetParent !== null && el.offsetHeight > 0;
+    });
+    if(!inhalt) kopf.style.display = 'none';
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', kopfWeg);
+  else kopfWeg();
+})();
+/* ---------- Ende EMBED-KOPF ---------- */
 </script>
 </body>
 </html>
