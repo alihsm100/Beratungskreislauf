@@ -159,9 +159,9 @@ function istGesperrt(id){ return MODE==='vertriebler' && GESPERRT_VERTRIEBLER.in
    + Hinweis-Inhalt der gesperrten Stationen in der Vertriebler-Version. */
 const PURPOSE = {
   kp:'Hier entsteht die Grundlage von allem: Du analysierst dein Umfeld und Netzwerk und baust daraus deine Top-40-Liste. Und du legst regelmäßig nach, damit dir die Potenziale nie ausgehen.',
-  nw:'Beziehungen pflegen, ohne einen Termin zu wollen: ehrliches Interesse, regelmäßiger Kontakt. So werden aus kalten Kontakten (P3) warme (P2) und heiße (P1).',
-  pr:'In wenigen Sätzen erklären können, wer tecis ist und was du als Zuversichtsberater machst. Die PR-Story ist zugleich dein Reaktionstest: Du arbeitest mit denen weiter, die positiv oder neutral reagieren.',
-  term:'Aus Kontakten werden Termine. Die Akquiseformel zeigt, wovon dein Erfolg abhängt — und du wählst dazu den passenden Weg: Pitch, Event oder Empfehlung.',
+  nw:'Beziehungen pflegen, ohne einen Termin zu wollen: ehrliches Interesse, regelmäßiger Kontakt. Networking macht aus P3 ein P2. Die PR-Story misst, ob jemand P1 ist.',
+  pr:'In wenigen Sätzen erklären können, wer tecis ist und was wir eigentlich machen. Du erzählst sie ohne Terminwunsch und misst an der Reaktion die Temperatur: Weiter geht es mit denen, die positiv oder neutral reagieren.',
+  term:'Aus Kontakten in Phase P1 werden Termine. Vier Leitfragen zeigen, wovon dein Akquiseerfolg abhängt, und du wählst dazu den passenden Weg: Pitch, Event oder Empfehlung.',
   s1:'Der erste Beratungstermin: tecis vorstellen, vor allem aber die Ziele und Wünsche des Kunden intensiv verstehen. Dazu gründliche Datenaufnahme und die Folgetermine vereinbaren.',
   konzept:'Zwischenschritt ohne Kunde: Aus den S1-Daten entsteht das Konzept. Die Toolkompetenz dafür lernst du im eCampus und über die Toolführerscheine.',
   s2:'Wie erreichen wir die Ziele des Kunden? Budget beschaffen, Möglichkeiten und Versorgungslücken aufzeigen, das Konzept mit dem tecis-Haus visuell darlegen.',
@@ -180,7 +180,7 @@ const VIDEOS = {   /* Video-Embeds pro Unterpunkt (SharePoint/Stream-Embed-URL).
   ── Slot-Plan v4 (Gesamtliste, 17 Slots) ── */
   kp1:'',   /*  1 Kundenpotenzial — Top-40-Liste (aufnehmen, zwingend) */
   kp2:'',   /*  2 Kundenpotenzial — Umfeldanalyse (optional) */
-  te6:'',   /*  3 Terminierung — Akquiseformel (aufnehmen) */
+  te6:'',   /*  3 Terminierung: Akquiseerfolgs-Gleichung (aufnehmen) */
   te1:'',   /*  4 Terminierung — Pitch (vorhanden/neu; Testvideo geparkt, s. unten) */
   te5:'',   /*  5 Terminierung — Einwandbehandlung (aufnehmen) */
   s1k2:'',  /*  6 S1 — S1-Gespräch (aufnehmen) */
@@ -226,15 +226,15 @@ const STATIONEN = [
      <div class="merk">Die Liste darf nie auf null laufen. Nachlegen ist fester Bestandteil der Monatsplanung, kein Notfallprogramm.</div>`}
   ]},
  {id:'nw', name:'Networking', typ:'zw',
-  desc:'Beziehungen pflegen — noch ohne Terminierungsziel. Hier baust du Nähe und Vertrauen auf und hältst deine Liste lebendig, bevor überhaupt ein Termin im Raum steht.',
+  desc:'Beziehungen pflegen — noch ohne Terminierungsziel. Hier baust du Nähe und Beziehung auf und hältst deine Liste lebendig, bevor überhaupt ein Termin im Raum steht.',
   punkte:[
    {id:'nw1', t:'Kontaktpflege ohne Terminierungsziel', x:`<p>Networking heißt: in Kontakt sein, sich für Menschen interessieren, präsent bleiben — <b>ohne</b> dass dahinter direkt eine Terminabsicht steht. Das schützt dein Netzwerk und dein Standing.</p>
      <div class="merk">Grundhaltung: <b>ehrliches Interesse</b> am Menschen — nicht gespielt, sondern echt.</div>
      <p>Leseempfehlung: <b>Dale Carnegie, „Wie man im digitalen Zeitalter Freunde gewinnt … und Menschen beeinflusst"</b>.</p>`},
-   {id:'nw2', t:'Wärmegrade: P3 → P2 → P1', x:`<p>Jeder Name auf deiner Liste bekommt einen Wärmegrad:</p>
-     <ul><li><b>P3 = kalt</b> — Kontakt besteht, aber lange her / lose</li>
-     <li><b>P2 = warm</b> — regelmäßiger, guter Kontakt</li>
-     <li><b>P1 = heiß</b> — Vertrauensverhältnis, Termin kurzfristig möglich</li></ul>
+   {id:'nw2', t:'Phasen: P3 → P2 → P1', x:`<p>Jeder Name auf deiner Liste bekommt eine Phase:</p>
+     <ul><li><b>P3 = kein Kontakt</b>: aktuell kein Kontakt, kein Austausch</li>
+     <li><b>P2 = Kontakt</b>: der Kontakt reicht, um ins Thema tecis einzusteigen; auch wer auf die PR-Story negativ reagiert hat, bleibt P2</li>
+     <li><b>P1 = Go</b>: PR-Story platziert, Reaktion positiv oder offen; jetzt kann gepitcht werden</li></ul>
      <div class="merk">Networking macht aus P3 ein P2 und aus P2 ein P1 — <b>dann</b> erst kommt die Terminierung.</div>`},
    {id:'nw4', t:'Gesprächsführung — „Wie baue ich ein gutes Gespräch auf?"', x:`<p>Vier Fragen, die jedes Gespräch tragen:</p>
      <ul><li>1. <b>Was machst du aktuell?</b></li>
@@ -261,36 +261,47 @@ const STATIONEN = [
      <li><b>knapp 10.000 Vertriebspartner</b>, davon <b>über 4.000 lizenzierte Berater</b>, an <b>über 400 Standorten</b> bundesweit — Tendenz wachsend</li></ul>`},
    {id:'pr1', t:'2 · Deine persönliche Story — 4 Fragen', x:`<p>Formuliere deine Geschichte in eigenen Worten — kurz, ehrlich, mit klarem Nutzen für dein Gegenüber:</p>
      <div class="fragekarte"><b>1. Was wollte ich eigentlich machen?</b><span>dein ursprünglicher Plan / Werdegang</span></div>
-     <div class="fragekarte"><b>2. Warum bin ich zu tecis gewechselt?</b><span>der Wendepunkt — ehrlich und persönlich</span></div>
+     <div class="fragekarte"><b>2. Warum mache ich zusätzlich tecis?</b><span>wie und warum tecis dazukam, ehrlich und persönlich</span></div>
      <div class="fragekarte"><b>3. Klarer Kundennutzen</b><span>was der Kunde konkret davon hat</span></div>
      <div class="fragekarte"><b>4. Ausstieg mit offener Frage</b><span>überleiten bzw. die Frage wegnehmen</span></div>`},
-   {id:'pr2', t:'Hintergrund für dich — Was macht der Zuversichtsberater?', x:`<div class="merk"><b>Das ist kein Schritt im Aufbau deiner Story</b>, sondern Wissen, das in deinem Kopf sitzen muss: Du musst jederzeit erklären können, was wir eigentlich tun.</div>
+   {id:'pr2', t:'Hintergrund für dich: Was machen wir eigentlich?', x:`<div class="merk"><b>Das ist kein Schritt im Aufbau deiner Story</b>, sondern Wissen, das in deinem Kopf sitzen muss: Du musst jederzeit erklären können, was wir eigentlich tun.</div>
      <ul>
-     <li>prüft und optimiert</li>
-     <li>nutzt alle staatlichen Zulagen und generiert Steuervorteile</li>
+     <li>Wir prüfen und optimieren.</li>
+     <li>Wir nutzen alle staatlichen Zulagen und generieren Steuervorteile.</li>
      <li>Vorteile für den Kunden: weniger Kosten, mehr Transparenz, bessere Ordnung, höhere Rendite bei gleicher Sicherheit</li>
      <li>dadurch einige tausend Euro mehr im Portemonnaie</li>
      <li>mehr Budget für Urlaub, private Anschaffungen, besseres Auto, früher in den Ruhestand, schneller in die eigenen vier Wände</li></ul>`},
-   {id:'pr4', t:'PR-Story = Reaktionstest', x:`<p>Die PR-Story wird <b>auf dem Networking-Weg</b> kommuniziert — und testet Reaktionen: positiv, neutral oder negativ.</p>
-     <div class="merk"><b>Weitergearbeitet wird nur mit positiven und neutralen Reaktionen.</b></div>`}
+   {id:'pr4', t:'PR-Story = Temperatur messen', x:`<p>Die PR-Story erzählst du <b>beiläufig auf dem Networking-Weg</b>, wo es passt, und <b>ohne Terminwunsch</b>. An der Reaktion (positiv, neutral oder negativ) liest du ab, wie warm der Kontakt ist.</p>
+     <div class="merk"><b>Weitergearbeitet wird nur mit positiven und neutralen Reaktionen.</b> Erst klopfen, dann aufschneiden: wie bei einer Melone erst die PR-Story, dann der Pitch.</div>
+     <ul>
+     <li><b>Positiv oder neutral, aber offen:</b> Phase P1, das Go zum Pitch.</li>
+     <li><b>Negativ:</b> Der Kontakt bleibt in Phase P2. Kein Go zum Pitch, und du bewertest sein Interesse neu.</li>
+     <li><b>Wording:</b> Sag nicht, dass du schon berätst, sondern „das lerne ich gerade". So bleibt die Story unverfänglich und klingt nicht nach Vertrieb.</li></ul>`}
   ]},
  {id:'term', name:'Terminierung', typ:'haupt',
-  desc:'Aus warmen Kontakten werden Termine. Der Überbegriff ist die Akquiseformel — sie spannt die drei Wege der Terminierung auf. Das Interaktive Terminierungstool liefert die Tiefe: alle Inhalte, Skripte und Formulierungen.',
+  desc:'Aus Kontakten in Phase P1 werden Termine. Der Überbegriff ist die Akquiseerfolgs-Gleichung: vier Leitfragen zu jedem Kontakt. Dazu wählst du einen der drei Wege der Terminierung. Das Interaktive Terminierungstool liefert die Tiefe: alle Inhalte, Skripte und Formulierungen.',
   punkte:[
-   {id:'te6', t:'Die Akquiseformel — der Überbegriff', x:`<div class="merk"><b>Akquiseerfolg = Standing × Vertrauen × Interesse × Strategie</b><br>Schulnoten 1–6, multiplikativ — die schwächste Dimension entscheidet.</div>
+   {id:'te6', t:'Die Akquiseerfolgs-Gleichung: der Überbegriff', x:`<div class="merk"><b>Dein Akquiseerfolg hängt an vier Fragen</b>, mit denen du jeden Kontakt bewertest.</div>
      <ul>
-     <li><b>Lehre 1:</b> Standing und Vertrauen sind exorbitant entscheidend — ihr Aufbau kostet Zeit.</li>
-     <li><b>Lehre 2:</b> Je niedriger Standing und Vertrauen, desto besser muss die Strategie sein.</li></ul>
-     <p><b>Strategie kann sein:</b> 1. Pitch · 2. Empfehlung aussprechen (FK übernimmt) · 3. Event/Einladung — <b>die Formel spannt die drei Wege der Terminierung auf</b>, die du unten findest.</p>`},
+     <li><b>Standing:</b> Hält er dich fachlich für kompetent?</li>
+     <li><b>Beziehung:</b> Wie nah seid ihr euch?</li>
+     <li><b>Interesse:</b> Wie sehr interessiert ihn das Thema Finanzen?</li>
+     <li><b>Nutzen:</b> Wie groß ist der konkrete Vorteil, den du ihm zeigen kannst? Lebensereignisse wie Berufsstart, Jobwechsel, Heirat, Kind oder Immobilie machen ihn größer.</li></ul>
+     <p>Dazu kommt die <b>Phase</b> (P3, P2, P1): Wie weit bist du mit ihm im Akquiseprozess?</p>
+     <p><b>Wie die Fragen zusammenwirken:</b></p>
+     <ul>
+     <li><b>Interesse und Nutzen gleichen sich aus.</b> Wer sich null für Finanzen interessiert, spielt trotzdem mit, wenn der Nutzen groß genug ist.</li>
+     <li><b>Standing wirkt wie ein Filter.</b> Hält dich jemand fachlich nicht für kompetent, nimmt er auch einen großen Nutzen nicht ernst, gerade im eigenen Umfeld. Auffangen kannst du das mit der Begleitung durch deine Führungskraft, die bei tecis Standard ist.</li></ul>
+     <p>Für den Termin wählst du einen der <b>drei Wege der Terminierung</b>, die du unten findest: Pitch, Events &amp; Einladung, Empfehlungsgeber &amp; FK-Terminierung.</p>`},
    {id:'te4', t:'Interaktives Terminierungstool — dein Nachschlagewerk', x:`<p>Das Tool liefert die <b>Tiefe zur Terminierung</b>: alle Wege, Formulierungen und Skripte im Detail. Die drei Wege unten sind der Fokus — das Tool ist dein Nachschlagewerk dazu.</p>
      <span id="dl-slot"></span>`},
    {id:'te1', t:'Weg 1 — Der Pitch (5 Schritte)', x:`<ul>
-     <li>1. <b>Hinleitender Gesprächsanlass</b> — natürlich ins Thema einsteigen, ohne direkt zu verkaufen: „Wir hatten gerade [Fall/Schulung/Gespräch] zu [Thema]. Da musste ich an dich denken, weil [Bezug]. Gerade jetzt spannend, weil [Anlass]."</li>
+     <li>1. <b>Hinleitender Gesprächsanlass</b> — natürlich ins Thema einsteigen, ohne direkt zu verkaufen: „Wir hatten gerade [Fall/Schulung/Gespräch] zu [Thema]. Da musste ich an dich denken, weil [Bezug]. Gerade jetzt spannend, weil [Anlass]." Vor dem Anruf beantworten: warum gerade ich, warum gerade dich, warum gerade jetzt. Nach der PR-Story ist das Feedback des Kontakts oft schon dein Anlass.</li>
      <li>2. <b>Problem / Relevanz öffnen</b> — „Viele haben aktuell das Problem, dass [Problem]." Dein Gegenüber soll denken: „Stimmt, das betrifft mich vielleicht auch."</li>
      <li>3. <b>Akquisefrage stellen</b> — „Hast du dir schon mal angeschaut, ob [Thema/Möglichkeit/Potenzial]?" Aktiv einbinden, grundsätzliches Interesse prüfen.</li>
-     <li>4. <b>MVN-Struktur nutzen</b> — <b>M</b>erkmal → <b>V</b>orteil → <b>N</b>utzen: vom Sachlichen zum Persönlichen, für genau diesen Menschen formuliert.</li>
+     <li>4. <b>MVN-Struktur nutzen</b> — <b>M</b>erkmal → <b>V</b>orteil → <b>N</b>utzen: vom Sachlichen zum Persönlichen, für genau diesen Menschen formuliert. MVN ist ein Stilmittel, kein Pflichtschritt: Kern jedes Pitches ist der Nutzen. Ist er groß genug, kannst du Schritte überspringen.</li>
      <li>5. <b>Terminfrage stellen</b> — „Wäre es für dich spannend, wenn wir uns das einmal grob anschauen?" Den nächsten Schritt einfach und unverbindlich anbieten.</li></ul>`, subs:[
-    {id:'te7', t:'Beispiel-Pitch: „Zuversichtsberatung"', x:`<ul>
+    {id:'te7', t:'Beispiel-Pitch: „Spielraum im Alltag finden"', x:`<ul>
      <li><b>Zielgruppe:</b> Angestellte, junge Berufstätige, Familien — alle mit Sparpotenzial im Alltag.</li>
      <li><b>Gesprächsanlass:</b> neue Kampagne — wir prüfen, ob Menschen Geld einsparen können, das sie im Alltag gar nicht auf dem Schirm haben.</li>
      <li><b>Akquisefrage:</b> „Hast du dir schon mal anschauen lassen, ob bei dir im Alltag Geld liegen bleibt, das du gar nicht auf dem Schirm hast?"</li>
@@ -327,7 +338,7 @@ const STATIONEN = [
   ]},
  {id:'s1', name:'S1-Gespräch', typ:'haupt', sub:'why · ab hier: Autopilot',
   gc:{code:'S1 · WHY', titel:'Die Ziele & Wünsche des Kunden'},
-  desc:'Das Erstgespräch / die Zuversichtsberatung — favorisiert in Präsenz. Keine starre Schrittfolge, sondern die wichtigsten Dinge des S1. Ab hier trägt dich der Prozess.',
+  desc:'Das Erstgespräch, favorisiert in Präsenz. Keine starre Schrittfolge, sondern die wichtigsten Dinge des S1. Ab hier trägt dich der Prozess.',
   punkte:[
    {id:'s1k1', t:'tecis & unsere Arbeitsweise vorstellen', x:`<p>tecis als Unternehmung und unsere Arbeitsweise grundlegend vorstellen — der Kunde versteht, mit wem er es zu tun hat und wie wir arbeiten.</p>`},
    {id:'s1k2', t:'Das WHY intensiv verstehen: Ziele & Wünsche', x:`<p>Die <b>wichtigste Frage des Termins</b>: Was sind die Ziele und Wünsche des Kunden? Hier entsteht das WHY, an dem sich alles Weitere ausrichtet — S2 (HOW) und S3 (WHAT) bauen darauf auf.</p>`},
